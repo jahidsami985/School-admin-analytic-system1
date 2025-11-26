@@ -1,0 +1,7 @@
+<h1>All Students performance</h1>
+
+<ul>
+    {% for s in data %}
+        <li>{{ s.marks}}-{{ s.grade}}- {{ s.course }} </li>
+    {% endfor %}
+</ul>

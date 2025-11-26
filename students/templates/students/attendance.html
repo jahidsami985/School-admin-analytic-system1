@@ -1,0 +1,7 @@
+<h1> Attendance sheet </h1>
+
+<ul>
+    {% for s in data %}
+        <li>{{ s.name }} - {{ s.date }} -{{s.status}} </li>
+    {% endfor %}
+</ul>
