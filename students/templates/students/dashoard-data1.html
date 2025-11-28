@@ -1,0 +1,25 @@
+<canvas id="passFailChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+fetch("/dashboard-data/")
+  .then(res => res.json())
+  .then(data => {
+    const failData = data.fail_rate_status_details;
+
+    const passed = failData.filter(x => x.status === "passed").length;
+    const failed = failData.filter(x => x.status === "fail").length;
+
+    new Chart(document.getElementById("passFailChart"), {
+      type: "doughnut",
+      data: {
+        labels: ["Passed", "Failed"],
+        datasets: [{
+          data: [passed, failed],
+          backgroundColor: ["#4CAF50", "#F44336"]
+        }]
+      }
+    });
+  });
+</script>

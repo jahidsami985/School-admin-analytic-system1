@@ -51,6 +51,7 @@ class Performance(models.Model):
     grade = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    total_marks = models.FloatField(default=0) 
 
     def __str__(self):
         return f"{self.student.name} - {self.course.name}: {self.grade} ({self.marks})"

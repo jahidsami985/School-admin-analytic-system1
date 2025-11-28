@@ -1,0 +1,38 @@
+<h2>Average Scores</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Average Score</th>
+    </tr>
+
+    {% for item in avg_scores %}
+        <tr>
+            <td>{{ item.student_id }}</td>
+            <td>{{ item.student__name }}</td>
+            <td>{{ item.avg_scores }}</td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="3">No data</td></tr>
+    {% endfor %}
+</table>
+
+
+<h2>Low Attendance &lt; 75%</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Attendance %</th>
+    </tr>
+
+    {% for st in low_attendance %}
+        <tr>
+            <td>{{ st.student_id }}</td>
+            <td>{{ st.student__name }}</td>
+            <td>{{ st.att }}</td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="3">No low attendance</td></tr>
+    {% endfor %}
+</table>

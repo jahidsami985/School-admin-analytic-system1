@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from students import views
 
+
 urlpatterns = [
      path('admin/', admin.site.urls),
     
@@ -29,5 +30,10 @@ urlpatterns = [
     path("edit-student-info/",views.edit_student_info,name='edit_student_info'),
     path('attendance_edit_student/',views.edit_attendance_info,name="edit_attendance_info"),
     path("edit_perform/",views.edit_performance,name="edit_performance"),
+    path("dashboard-data/", views.dashboard_data, name="dashboard-data"),
+    path("pass-fail-chart/", views.pass_fail_chart_page, name="pass_fail_chart"),
 
 ]
+
+
+
