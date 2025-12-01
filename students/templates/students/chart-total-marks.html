@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h3>Total Marks per student</h3>
+
+<canvas id="Student-marks-per" width="400" height="450"></canvas>
+
+<script>
+fetch("/dashboard-data/")
+  .then(res => res.json())
+  .then(data => {
+
+    const marks_per = data.total_marks;
+
+    const labels = marks_per .map(item => item.student__name);
+    const marks = marks_per .map(item => item.total_marks);
+
+    new Chart(document.getElementById("Student-marks-per"), {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Total Marks",
+          data: marks,
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

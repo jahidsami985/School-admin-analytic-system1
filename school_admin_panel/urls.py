@@ -32,6 +32,9 @@ urlpatterns = [
     path("edit_perform/",views.edit_performance,name="edit_performance"),
     path("dashboard-data/", views.dashboard_data, name="dashboard-data"),
     path("pass-fail-chart/", views.pass_fail_chart_page, name="pass_fail_chart"),
+    path("top-5/",views.top5_chart_page,name="top5_chart_page"),
+    path("bttm-5/",views.bttm_5_pg,name="bttm_5_pg"),
+    path("mark-per/",views.mark_per_studnet,name="mark_per_studnet")
 
 ]
 

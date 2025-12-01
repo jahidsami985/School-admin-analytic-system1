@@ -1,4 +1,4 @@
-<canvas id="passFailChart"></canvas>
+<canvas id="passFailChart" width="200" height="200"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -19,6 +19,9 @@ fetch("/dashboard-data/")
           data: [passed, failed],
           backgroundColor: ["#4CAF50", "#F44336"]
         }]
+      },
+      options: {
+        responsive: false     // IMPORTANT: must disable for fixed size
       }
     });
   });

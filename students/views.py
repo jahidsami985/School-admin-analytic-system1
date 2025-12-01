@@ -155,3 +155,13 @@ def dashboard_data(request):
 
 def pass_fail_chart_page(request):
     return render(request, "students/dashoard-data1.html")
+
+def top5_chart_page(request):
+    return render(request, "students/top-5-studnt-chart.html")
+
+def bttm_5_pg(request):
+    return render(request,"students/bttom-5-student.html")
+
+def mark_per_studnet(request):
+    return render(request,"students/chart-total-marks.html")
+

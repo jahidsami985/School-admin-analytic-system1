@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h3>Bottom 5 Student Performance</h3>
+
+<canvas id="top5Chart" width="400" height="450"></canvas>
+
+<script>
+fetch("/dashboard-data/")
+  .then(res => res.json())
+  .then(data => {
+
+    const bottom_five = data.bottom_five_stu;
+
+    const labels = bottom_five.map(item => item.student__name);
+    const marks = bottom_five.map(item => item.total_marks);
+
+    new Chart(document.getElementById("top5Chart"), {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "Total Marks",
+          data: marks,
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
