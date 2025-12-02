@@ -5,27 +5,27 @@
 </head>
 <body>
 
-<h3>Top 5 Student Performance (with Department)</h3>
+<h3>Department performance comparison
+</h3>
 
-<canvas id="top5Chart" width="400" height="450"></canvas>
+<canvas id="Marks_based_on_department" width="400" height="450"></canvas>
 
 <script>
 fetch("/dashboard-data/")
   .then(res => res.json())
   .then(data => {
 
-    const top5 = data.top_five_stu;
+    const marks_per_dept = data.total_marks;
 
-    // Modified labels to include the department name
-    const labels = top5.map(item => `${item.student__name} (${item.student__department__name})`);
-    const marks = top5.map(item => item.total_marks);
+    const labels = marks_per_dept .map(item => item.student__name);
+    const marks =marks_per_dept .map(item => item.student__department__name);
 
-    new Chart(document.getElementById("top5Chart"), {
+    new Chart(document.getElementById("Marks_based_on_department"), {
       type: "bar",
       data: {
         labels: labels,
         datasets: [{
-          label: "Total Marks",
+          label: "Department",
           data: marks,
           backgroundColor: "rgba(54, 162, 235, 0.6)",
           borderColor: "rgba(54, 162, 235, 1)",

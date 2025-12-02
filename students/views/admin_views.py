@@ -1,11 +1,12 @@
-from .models import Student, Performance, Attendance,Course
+from students.models import Student, Performance, Attendance, Course
+
 from django.shortcuts import render, redirect, get_object_or_404
 
-from django.db.models import Avg, Sum, Case, When, FloatField,IntegerField
+from django.db.models import Avg, Sum, Case, When, FloatField, IntegerField
 from django.http import JsonResponse
 
 
-from .forms import StudentForm, StudentFormSet,AttendanceForm,AttendanceFormSet,PerformanceForm,PerformanceFormSet
+from students.forms import StudentForm, StudentFormSet, AttendanceForm, AttendanceFormSet, PerformanceForm, PerformanceFormSet
 
 
 def student_list(request):
@@ -54,7 +55,7 @@ def edit_student_info(request):
 
 def edit_attendance_info(request):
     if request.method == "POST":
-        formset =AttendanceFormSet(request.POST, queryset=Attendance.objects.all())
+        formset = AttendanceFormSet(request.POST, queryset=Attendance.objects.all())
 
         if formset.is_valid():
             formset.save()
@@ -63,6 +64,8 @@ def edit_attendance_info(request):
         formset = AttendanceFormSet(queryset=Attendance.objects.all())
 
     return render(request, "students/edit_att.html", {"formset": formset})
+
+
 def edit_performance(request):
     queryset = Performance.objects.all()  # optionally filter by course
 
@@ -86,30 +89,35 @@ def dashboard_data(request):
     # 1️⃣ Total marks per student
     total_marks_qs = Performance.objects.values(
         "student_id",
-        "student__name"
-    ).annotate(total_marks=Sum("marks"))
+        "student__name",
+        "student__department__id",
+        "student__department__name"
+    ).annotate(total_marks=Sum("marks", output_field=FloatField()))
     total_marks = list(total_marks_qs)
 
-    # 2️⃣ Top 5
+    # 2️⃣ Top 5 (FIXED: Added missing comma and correct FK lookup)
     top_five_qs = Performance.objects.values(
         "student_id",
-        "student__name"
-    ).annotate(total_marks=Sum("marks")).order_by('-total_marks')[:5]
+        "student__name", # <--- Comma added here
+        "student__department__id", # <--- Correct field name for department ID via student
+        "student__department__name" # <--- Added to get the name
+    ).annotate(total_marks=Sum("marks", output_field=FloatField())).order_by('-total_marks')[:5]
     top_five_stu = list(top_five_qs)
 
     # 3️⃣ Bottom 5
     bottom_five = Performance.objects.values(
         "student_id",
         "student__name"
-    ).annotate(total_marks=Sum("marks")).order_by('total_marks')[:5]
+    ).annotate(total_marks=Sum("marks", output_field=FloatField())).order_by('total_marks')[:5]
     bottom_five_stu = list(bottom_five)
 
     # 4️⃣ Pass/Fail (<50%)
     fail_rate = Performance.objects.values(
         "student_id",
         "student__name"
+        
     ).annotate(
-        total_marks=Sum("marks")
+        total_marks=Sum("marks", output_field=FloatField())
     ).annotate(
         fail=Case(
             When(total_marks__lt=50, then=1),
@@ -165,3 +173,5 @@ def bttm_5_pg(request):
 def mark_per_studnet(request):
     return render(request,"students/chart-total-marks.html")
 
+def marks_per_department(request):
+    return render(request,"students/marks-basedon-department.html")
