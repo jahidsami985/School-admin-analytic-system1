@@ -1,8 +1,10 @@
 from django.urls import path
-from students.views import admin_views   # ← new import
+from students.views import admin_views,teacher_views  # ← new import
+from django.contrib import admin
 
 urlpatterns = [
     # Student CRUD & Lists
+    path("admin/", admin.site.urls),
     path("students/", admin_views.student_list, name="student_list"),
     path("student_p/", admin_views.student_perform, name="student_perform"),
     path("attendace_s/", admin_views.student_attandance, name="student_attandance"),
@@ -18,4 +20,10 @@ urlpatterns = [
     path("bttm-5/", admin_views.bttm_5_pg, name="bttm_5_pg"),
     path("mark-per/", admin_views.mark_per_studnet, name="mark_per_studnet"),
     path("marks_dept/", admin_views.marks_per_department, name="marks_per_department"),
+
+    #Teach Analytic dashboard
+    path("Teacher-Dashboard-charts/<int:teacher_id>/",
+    teacher_views.teacher_dashboard_page,
+    name="Teacher-Dashboard-charts")
+
 ]

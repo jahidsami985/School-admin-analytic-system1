@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .chart-container { width: 600px; margin-bottom: 50px; }
+        h2 { margin-top: 40px; }
+    </style>
+</head>
+
+<body>
+
+    <h1>Teacher Analytics Dashboard</h1>
+
+    <!-- Student Marks Comparison -->
+    <h2>Student Marks Comparison</h2>
+    <div class="chart-container">
+        <canvas id="marksChart"></canvas>
+    </div>
+
+    <!-- Attendance Trend -->
+    <h2>Attendance Trend</h2>
+    <div class="chart-container">
+        <canvas id="attendanceChart"></canvas>
+    </div>
+
+    <!-- Grade Distribution -->
+    <h2>Grade Distribution</h2>
+    <div class="chart-container">
+        <canvas id="gradeChart"></canvas>
+    </div>
+
+    <!-- Assignment Completion Pie -->
+    <h2>Assignment Completion</h2>
+    <div class="chart-container">
+        <canvas id="assignmentChart"></canvas>
+    </div>
+
+<script>
+    const teacherId = "{{ teacher_id }}";  // sent from view()
+
+    fetch(`/teacher/dashboard-data/${teacherId}/`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+            // -------------------------------
+            // 1️⃣ Student Marks Comparison
+            // -------------------------------
+            const names = data.student_marks.map(x => x.name);
+            const marks = data.student_marks.map(x => x.total);
+
+            new Chart(document.getElementById("marksChart"), {
+                type: "bar",
+                data: {
+                    labels: names,
+                    datasets: [{
+                        label: "Total Marks",
+                        data: marks
+                    }]
+                }
+            });
+
+            // -------------------------------
+            // 2️⃣ Attendance Trend
+            // -------------------------------
+            const att_dates = data.attendance_trend.map(x => x.date);
+            const att_values = data.attendance_trend.map(x => x.percentage);
+
+            new Chart(document.getElementById("attendanceChart"), {
+                type: "line",
+                data: {
+                    labels: att_dates,
+                    datasets: [{
+                        label: "Attendance (%)",
+                        data: att_values
+                    }]
+                }
+            });
+
+            // -------------------------------
+            // 3️⃣ Grade Distribution
+            // -------------------------------
+            new Chart(document.getElementById("gradeChart"), {
+                type: "doughnut",
+                data: {
+                    labels: Object.keys(data.grade_distribution),
+                    datasets: [{
+                        data: Object.values(data.grade_distribution)
+                    }]
+                }
+            });
+
+            // -------------------------------
+            // 4️⃣ Assignment Completion
+            // -------------------------------
+            new Chart(document.getElementById("assignmentChart"), {
+                type: "pie",
+                data: {
+                    labels: ["Submitted", "Pending", "Late"],
+                    datasets: [{
+                        data: [
+                            data.assignments.submitted,
+                            data.assignments.pending,
+                            data.assignments.late
+                        ]
+                    }]
+                }
+            });
+
+        });
+</script>
+
+</body>
+</html>
