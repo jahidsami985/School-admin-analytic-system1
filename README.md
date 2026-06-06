@@ -33,6 +33,16 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+## Dependencies
+
+This project depends on the following Python packages:
+
+- `Django==5.2.8`
+- `mysqlclient==2.2.8`
+- `asgiref==3.11.1`
+- `sqlparse==0.5.5`
+- `tzdata==2026.2`
+
 ## Notes
 
 - This repo was initialized locally and the current commit includes improved analytics styling and a stable chart layout.
