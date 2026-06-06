@@ -1,0 +1,118 @@
+{% extends "register1/base.html" %}
+{% load static %}
+
+{% block title %}Insights{% endblock %}
+
+{% block content %}
+<div class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Insights</p>
+      <h1>Student Performance Analytics</h1>
+      <p class="page-lead">A single analytics page for students, teachers, and admins with all charts in one place.</p>
+    </div>
+    <div class="header-meta">
+      <span class="header-pill">5 charts</span>
+      <span class="header-pill">Live campus performance</span>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="card chart-card">
+      <h2 class="chart-title">Pass / Fail Breakdown</h2>
+      <canvas id="passFailChart"></canvas>
+    </div>
+
+    <div class="card chart-card">
+      <h2 class="chart-title">Top 5 Students</h2>
+      <canvas id="top5Chart"></canvas>
+    </div>
+
+    <div class="card chart-card">
+      <h2 class="chart-title">Bottom 5 Students</h2>
+      <canvas id="bottom5Chart"></canvas>
+    </div>
+
+    <div class="card chart-card">
+      <h2 class="chart-title">Total Marks by Student</h2>
+      <canvas id="studentMarksChart"></canvas>
+    </div>
+
+    <div class="card chart-card">
+      <h2 class="chart-title">Department Performance</h2>
+      <canvas id="departmentChart"></canvas>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'students/js/charts.js' %}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    loadDashboardJson('/dashboard-data/')
+      .then(data => {
+        const passData = data.fail_rate_status_details || [];
+        const totalMarks = data.total_marks || [];
+        const top5 = data.top_five_stu || [];
+        const bottom5 = data.bottom_five_stu || [];
+        const deptData = data.total_marks || [];
+
+        const passTotals = passData.reduce((acc, item) => {
+          acc[item.status] = (acc[item.status] || 0) + 1;
+          return acc;
+        }, {});
+
+        const passLabels = Object.keys(passTotals);
+        const passValues = Object.values(passTotals);
+
+        const departmentTotals = deptData.reduce((acc, item) => {
+          const key = item.student__department__name || 'Unknown';
+          acc[key] = (acc[key] || 0) + (item.total_marks || 0);
+          return acc;
+        }, {});
+
+        renderDoughnutChart(
+          'passFailChart',
+          passLabels,
+          passValues,
+          ['#10b981', '#ef4444']
+        );
+
+        renderBarChart(
+          'top5Chart',
+          top5.map(item => item.student__name || 'Unknown'),
+          top5.map(item => item.total_marks || 0),
+          'Total Marks',
+          'rgba(14, 165, 233, 0.7)'
+        );
+
+        renderBarChart(
+          'bottom5Chart',
+          bottom5.map(item => item.student__name || 'Unknown'),
+          bottom5.map(item => item.total_marks || 0),
+          'Total Marks',
+          'rgba(248, 113, 113, 0.7)'
+        );
+
+        renderBarChart(
+          'studentMarksChart',
+          totalMarks.map(item => item.student__name || 'Student'),
+          totalMarks.map(item => item.total_marks || 0),
+          'Total Marks',
+          'rgba(34, 197, 94, 0.7)'
+        );
+
+        renderBarChart(
+          'departmentChart',
+          Object.keys(departmentTotals),
+          Object.values(departmentTotals),
+          'Department Total Marks',
+          'rgba(59, 130, 246, 0.7)'
+        );
+      })
+      .catch(err => console.error('Insights load failed:', err));
+  });
+</script>
+{% endblock %}
