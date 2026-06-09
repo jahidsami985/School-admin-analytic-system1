@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Admin Dashboard Chart{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'students/css/style.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{% static 'students/js/charts.js' %}"></script>
+</head>
+<body>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

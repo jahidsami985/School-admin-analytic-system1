@@ -1,0 +1,30 @@
+{% extends "students/chart_base.html" %}
+{% load static %}
+{% block title %}Department Performance Comparison{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h3 class="chart-title">Department Performance Comparison</h3>
+  <canvas id="departmentChart" width="400" height="300"></canvas>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+loadDashboardJson("/dashboard-data/")
+  .then(data => {
+    const marks_per_dept = data.total_marks || [];
+    const labels = marks_per_dept.map(item => item.student__department__name || '');
+    const marks = marks_per_dept.map(item => item.total_marks || 0);
+
+    renderBarChart(
+      "departmentChart",
+      labels,
+      marks,
+      "Total Marks",
+      "rgba(75, 192, 192, 0.6)"
+    );
+  })
+  .catch(err => console.error('Failed to load dashboard.json', err));
+</script>
+{% endblock %}

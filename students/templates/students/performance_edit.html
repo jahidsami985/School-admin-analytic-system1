@@ -1,0 +1,40 @@
+<h1>Edit Performance</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ formset.management_form }}
+
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Course</th>
+                <th>Marks</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for form in formset %}
+                <tr>
+                    <!-- Display student/course names (readonly) -->
+                    <td>{{ form.instance.student.name }}</td>
+                    <td>{{ form.instance.course.name }}</td>
+
+                    <!-- Editable fields -->
+                    <td>{{ form.marks }}</td>
+                    <td>{{ form.grade }}</td>
+
+                    <!-- Required HIDDEN fields -->
+                    {{ form.student }}
+                    {{ form.course }}
+                    {{ form.id }}     <!-- << MUST BE INCLUDED OR SAVE WILL NOT WORK -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <button type="submit">Save Changes</button>
+</form>

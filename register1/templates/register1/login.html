@@ -1,0 +1,34 @@
+{% extends "register1/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="page-shell auth-shell">
+  <div class="card auth-card">
+    <h1 class="auth-title">Login</h1>
+    <p class="auth-subtitle">Access your analytics dashboard.</p>
+
+    {% for message in messages %}
+      <div class="error">{{ message }}</div>
+    {% endfor %}
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" type="text" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn-primary">Login</button>
+    </form>
+
+    <p class="auth-footer">Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+  </div>
+</div>
+{% endblock %}

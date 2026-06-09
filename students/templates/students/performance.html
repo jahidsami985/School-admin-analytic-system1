@@ -1,0 +1,22 @@
+{% extends "students/base.html" %}
+
+{% block content %}
+<section class="page-header">
+  <h1>All Students Performance</h1>
+</section>
+
+<div class="card">
+  <ul class="card-list">
+    {% for s in data %}
+      <li>
+        <div>
+          <strong>{{ s.course }}</strong>
+          <p class="meta">Marks: {{ s.marks }} · Grade: {{ s.grade }}</p>
+        </div>
+      </li>
+    {% empty %}
+      <li>No performance records found.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

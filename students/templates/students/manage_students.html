@@ -1,0 +1,12 @@
+<h1>Manage Students</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+        {{ form.as_p }}
+    {% endfor %}
+
+    <button type="submit">Save</button>
+</form>

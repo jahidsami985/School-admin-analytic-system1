@@ -1,0 +1,23 @@
+{% extends "students/base.html" %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Attendance sheet</h1>
+</section>
+
+<div class="card">
+  <ul class="card-list">
+    {% for s in data %}
+      <li>
+        <div>
+          <strong>{{ s.name }}</strong>
+          <p class="meta">{{ s.date }}</p>
+        </div>
+        <span class="status {{ s.status|lower }}">{{ s.status }}</span>
+      </li>
+    {% empty %}
+      <li>No attendance records found.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

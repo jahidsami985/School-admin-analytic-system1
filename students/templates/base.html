@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Base Layout</title>
+    <link rel="stylesheet" href="{% static 'students/css/style.css' %}">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <span class="brand-title">Student</span>
+                <span class="brand-subtitle">Analytics</span>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="/dashboard/teacher/">
+                    <span class="nav-icon">📊</span>
+                    <span>Teacher Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout/">
+                    <span class="nav-icon">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <p class="sidebar-user">Current user</p>
+            <a class="logout-link" href="/logout/">Sign out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+      {% block content %}
+      {% endblock %}
+    </main>
+</div>
+
+</body>
+</html>

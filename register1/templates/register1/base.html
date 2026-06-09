@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Student Analytics{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'students/css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <span class="brand-title">Student</span>
+                <span class="brand-subtitle">Analytics</span>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="/">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'insights' %}">
+                        <span class="nav-icon">📊</span>
+                        <span>Insights</span>
+                    </a>
+                </li>
+                {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a href="{% url 'student_list' %}">
+                            <span class="nav-icon">👥</span>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'manage_students' %}">
+                            <span class="nav-icon">📋</span>
+                            <span>Manage</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'pass_fail_chart_page' %}">
+                            <span class="nav-icon">📊</span>
+                            <span>Admin Dashboard</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if is_teacher_user %}
+                    <li class="nav-item">
+                        <a href="{% url 'teacher_dashboard_page' user.teacher.id %}">
+                            <span class="nav-icon">👩‍🏫</span>
+                            <span>Teacher Dashboard</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+
+        <div class="sidebar-footer">
+            {% if user.is_authenticated %}
+                <p class="sidebar-user">{{ user.username }}</p>
+                <a class="logout-link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </aside>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

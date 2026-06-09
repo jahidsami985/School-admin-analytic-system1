@@ -1,0 +1,29 @@
+{% extends "students/chart_base.html" %}
+{% load static %}
+{% block title %}Total Marks per Student{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h3 class="chart-title">Total Marks per Student</h3>
+  <canvas id="studentMarksChart" width="400" height="300"></canvas>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+loadDashboardJson("/dashboard-data/")
+  .then(data => {
+    const marks_per = data.total_marks || [];
+    const labels = marks_per.map(item => item.student__name || '');
+    const marks = marks_per.map(item => item.total_marks || 0);
+
+    renderBarChart(
+      "studentMarksChart",
+      labels,
+      marks,
+      "Total Marks"
+    );
+  })
+  .catch(err => console.error('Failed to load dashboard.json', err));
+</script>
+{% endblock %}

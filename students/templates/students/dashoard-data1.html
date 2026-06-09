@@ -1,0 +1,29 @@
+{% extends "students/chart_base.html" %}
+{% load static %}
+{% block title %}Pass / Fail Chart{% endblock %}
+
+{% block content %}
+<div class="card" style="width:260px;">
+  <h3 class="chart-title">Pass / Fail</h3>
+  <canvas id="passFailChart" width="200" height="200"></canvas>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+loadDashboardJson("/dashboard-data/")
+  .then(data => {
+    const failData = data.fail_rate_status_details || [];
+    const passed = failData.filter(x => x.status === "passed").length;
+    const failed = failData.filter(x => x.status === "fail").length;
+
+    renderDoughnutChart(
+      "passFailChart",
+      ["Passed", "Failed"],
+      [passed, failed],
+      ["#4CAF50", "#F44336"]
+    );
+  })
+  .catch(err => console.error('Failed to load dashboard.json', err));
+</script>
+{% endblock %}

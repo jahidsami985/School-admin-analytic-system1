@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>School Admin Panel</title>
+    <style>
+        body { font-family: Arial; margin: 0; }
+        nav {
+            background: #333;
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/dashboard/teacher/">Teacher Dashboard</a>
+    <a href="/logout/">Logout</a>
+</nav>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
