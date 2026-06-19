@@ -31,6 +31,11 @@ urlpatterns = [
     teacher_views.teacher_dashboard_page,
     name="teacher_dashboard_page"
 ),
+    path(
+        "teacher/dashboard/data/<int:teacher_id>/",
+        teacher_views.teacher_dashboard_data,
+        name="teacher_dashboard_data",
+    ),
 
 
 ]

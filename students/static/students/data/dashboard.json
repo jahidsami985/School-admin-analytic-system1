@@ -1,227 +1,209 @@
 {
   "total_marks": [
     {
-      "student_id": 1,
-      "student__name": "Md jahid uddin",
-      "student__department__id": 1,
-      "student__department__name": "CSE",
-      "total_marks": 55.0
-    },
-    {
-      "student_id": 2,
-      "student__name": "Tim barlow",
-      "student__department__id": 1,
-      "student__department__name": "CSE",
-      "total_marks": 65.0
-    },
-    {
-      "student_id": 3,
-      "student__name": "Taylor alision",
-      "student__department__id": 1,
-      "student__department__name": "CSE",
-      "total_marks": 70.0
-    },
-    {
-      "student_id": 4,
-      "student__name": "Lisa simpson",
-      "student__department__id": 1,
-      "student__department__name": "CSE",
-      "total_marks": 50.0
-    },
-    {
       "student_id": 5,
-      "student__name": "mirko trovato",
-      "student__department__id": 1,
+      "student__name": "Adiba jafrin",
+      "student__department__id": 5,
       "student__department__name": "CSE",
-      "total_marks": 157.0
+      "total_marks": 90.0
     },
     {
-      "student_id": 17,
-      "student__name": "lovely sharma",
-      "student__department__id": 2,
-      "student__department__name": "BBA",
-      "total_marks": 87.0
+      "student_id": 6,
+      "student__name": "jahid uddin",
+      "student__department__id": 5,
+      "student__department__name": "CSE",
+      "total_marks": 90.0
     },
     {
-      "student_id": 19,
-      "student__name": "priyanka chopra",
-      "student__department__id": 2,
-      "student__department__name": "BBA",
-      "total_marks": 157.0
+      "student_id": 7,
+      "student__name": "lamia shaha",
+      "student__department__id": 5,
+      "student__department__name": "CSE",
+      "total_marks": 160.0
     },
     {
-      "student_id": 20,
-      "student__name": "nishi bgum",
-      "student__department__id": 2,
-      "student__department__name": "BBA",
-      "total_marks": 87.0
+      "student_id": 8,
+      "student__name": "mirko trovato",
+      "student__department__id": 5,
+      "student__department__name": "CSE",
+      "total_marks": 60.0
     },
     {
-      "student_id": 21,
-      "student__name": "sunny leone",
-      "student__department__id": 2,
-      "student__department__name": "BBA",
+      "student_id": 9,
+      "student__name": "tushar kumar",
+      "student__department__id": 5,
+      "student__department__name": "CSE",
       "total_marks": 55.0
     },
     {
-      "student_id": 22,
-      "student__name": "krk khan",
-      "student__department__id": 3,
+      "student_id": 10,
+      "student__name": "monca ghellar",
+      "student__department__id": 6,
       "student__department__name": "EEE",
-      "total_marks": 87.0
+      "total_marks": 20.0
     },
     {
-      "student_id": 23,
-      "student__name": "saif khan",
-      "student__department__id": 3,
+      "student_id": 11,
+      "student__name": "ross ghellar",
+      "student__department__id": 6,
       "student__department__name": "EEE",
-      "total_marks": 55.0
+      "total_marks": 90.0
     },
     {
-      "student_id": 24,
-      "student__name": "luna khan",
-      "student__department__id": 3,
+      "student_id": 12,
+      "student__name": "rachel green",
+      "student__department__id": 6,
       "student__department__name": "EEE",
-      "total_marks": 30.0
+      "total_marks": 140.0
+    },
+    {
+      "student_id": 14,
+      "student__name": "joey T",
+      "student__department__id": 6,
+      "student__department__name": "EEE",
+      "total_marks": 40.0
     }
   ],
   "top_five_stu": [
     {
-      "student_id": 19,
-      "student__name": "priyanka chopra",
-      "student__department__id": 2,
-      "student__department__name": "BBA",
-      "total_marks": 157.0
+      "student_id": 7,
+      "student__name": "lamia shaha",
+      "student__department__id": 5,
+      "student__department__name": "CSE",
+      "total_marks": 160.0
+    },
+    {
+      "student_id": 12,
+      "student__name": "rachel green",
+      "student__department__id": 6,
+      "student__department__name": "EEE",
+      "total_marks": 140.0
     },
     {
       "student_id": 5,
-      "student__name": "mirko trovato",
-      "student__department__id": 1,
+      "student__name": "Adiba jafrin",
+      "student__department__id": 5,
       "student__department__name": "CSE",
-      "total_marks": 157.0
+      "total_marks": 90.0
     },
     {
-      "student_id": 22,
-      "student__name": "krk khan",
-      "student__department__id": 3,
+      "student_id": 6,
+      "student__name": "jahid uddin",
+      "student__department__id": 5,
+      "student__department__name": "CSE",
+      "total_marks": 90.0
+    },
+    {
+      "student_id": 11,
+      "student__name": "ross ghellar",
+      "student__department__id": 6,
       "student__department__name": "EEE",
-      "total_marks": 87.0
-    },
-    {
-      "student_id": 17,
-      "student__name": "lovely sharma",
-      "student__department__id": 2,
-      "student__department__name": "BBA",
-      "total_marks": 87.0
-    },
-    {
-      "student_id": 20,
-      "student__name": "nishi bgum",
-      "student__department__id": 2,
-      "student__department__name": "BBA",
-      "total_marks": 87.0
+      "total_marks": 90.0
     }
   ],
   "bottom_five_stu": [
     {
-      "student_id": 24,
-      "student__name": "luna khan",
-      "total_marks": 30.0
+      "student_id": 10,
+      "student__name": "monca ghellar",
+      "total_marks": 20.0
     },
     {
-      "student_id": 4,
-      "student__name": "Lisa simpson",
-      "total_marks": 50.0
+      "student_id": 14,
+      "student__name": "joey T",
+      "total_marks": 40.0
     },
     {
-      "student_id": 1,
-      "student__name": "Md jahid uddin",
+      "student_id": 9,
+      "student__name": "tushar kumar",
       "total_marks": 55.0
     },
     {
-      "student_id": 21,
-      "student__name": "sunny leone",
-      "total_marks": 55.0
+      "student_id": 8,
+      "student__name": "mirko trovato",
+      "total_marks": 60.0
     },
     {
-      "student_id": 23,
-      "student__name": "saif khan",
-      "total_marks": 55.0
+      "student_id": 5,
+      "student__name": "Adiba jafrin",
+      "total_marks": 90.0
     }
   ],
   "fail_rate_status_details": [
     {
-      "student_id": 1,
-      "student_name": "Md jahid uddin",
-      "total_marks": 55.0,
-      "status": "passed"
-    },
-    {
-      "student_id": 2,
-      "student_name": "Tim barlow",
-      "total_marks": 65.0,
-      "status": "passed"
-    },
-    {
-      "student_id": 3,
-      "student_name": "Taylor alision",
-      "total_marks": 70.0,
-      "status": "passed"
-    },
-    {
-      "student_id": 4,
-      "student_name": "Lisa simpson",
-      "total_marks": 50.0,
-      "status": "passed"
-    },
-    {
       "student_id": 5,
+      "student_name": "Adiba jafrin",
+      "total_marks": 90.0,
+      "status": "passed"
+    },
+    {
+      "student_id": 6,
+      "student_name": "jahid uddin",
+      "total_marks": 90.0,
+      "status": "passed"
+    },
+    {
+      "student_id": 7,
+      "student_name": "lamia shaha",
+      "total_marks": 160.0,
+      "status": "passed"
+    },
+    {
+      "student_id": 8,
       "student_name": "mirko trovato",
-      "total_marks": 157.0,
+      "total_marks": 60.0,
       "status": "passed"
     },
     {
-      "student_id": 17,
-      "student_name": "lovely sharma",
-      "total_marks": 87.0,
-      "status": "passed"
-    },
-    {
-      "student_id": 19,
-      "student_name": "priyanka chopra",
-      "total_marks": 157.0,
-      "status": "passed"
-    },
-    {
-      "student_id": 20,
-      "student_name": "nishi bgum",
-      "total_marks": 87.0,
-      "status": "passed"
-    },
-    {
-      "student_id": 21,
-      "student_name": "sunny leone",
+      "student_id": 9,
+      "student_name": "tushar kumar",
       "total_marks": 55.0,
       "status": "passed"
     },
     {
-      "student_id": 22,
-      "student_name": "krk khan",
-      "total_marks": 87.0,
+      "student_id": 10,
+      "student_name": "monca ghellar",
+      "total_marks": 20.0,
+      "status": "fail"
+    },
+    {
+      "student_id": 11,
+      "student_name": "ross ghellar",
+      "total_marks": 90.0,
       "status": "passed"
     },
     {
-      "student_id": 23,
-      "student_name": "saif khan",
-      "total_marks": 55.0,
+      "student_id": 12,
+      "student_name": "rachel green",
+      "total_marks": 140.0,
       "status": "passed"
     },
     {
-      "student_id": 24,
-      "student_name": "luna khan",
-      "total_marks": 30.0,
+      "student_id": 14,
+      "student_name": "joey T",
+      "total_marks": 40.0,
       "status": "fail"
     }
   ],
-  "low_attendance": []
+  "low_attendance": [
+    {
+      "student_id": 7,
+      "student__name": "lamia shaha",
+      "att": 0.0
+    },
+    {
+      "student_id": 9,
+      "student__name": "tushar kumar",
+      "att": 0.0
+    },
+    {
+      "student_id": 11,
+      "student__name": "ross ghellar",
+      "att": 0.0
+    },
+    {
+      "student_id": 13,
+      "student__name": "pheobe buffary",
+      "att": 50.0
+    }
+  ]
 }

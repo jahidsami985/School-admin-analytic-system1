@@ -1,15 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Base Layout</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Analytics{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'students/css/style.css' %}">
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
 <div class="app-shell">
     <aside class="sidebar">
         <div class="sidebar-brand">
-            <div class="brand-icon">🎓</div>
+            <div class="brand-icon">SA</div>
             <div>
                 <span class="brand-title">Student</span>
                 <span class="brand-subtitle">Analytics</span>
@@ -18,30 +21,37 @@
 
         <ul class="nav-list">
             <li class="nav-item">
-                <a href="/dashboard/teacher/">
-                    <span class="nav-icon">📊</span>
-                    <span>Teacher Dashboard</span>
+                <a href="{% url 'insights' %}">
+                    <span class="nav-icon">IN</span>
+                    <span>Insights</span>
                 </a>
             </li>
+            {% if is_teacher_user %}
+                <li class="nav-item">
+                    <a href="{% url 'teacher_dashboard_page' user.teacher.id %}">
+                        <span class="nav-icon">TD</span>
+                        <span>Teacher Dashboard</span>
+                    </a>
+                </li>
+            {% endif %}
             <li class="nav-item">
-                <a href="/logout/">
-                    <span class="nav-icon">🚪</span>
+                <a href="{% url 'logout' %}">
+                    <span class="nav-icon">LO</span>
                     <span>Logout</span>
                 </a>
             </li>
         </ul>
 
         <div class="sidebar-footer">
-            <p class="sidebar-user">Current user</p>
-            <a class="logout-link" href="/logout/">Sign out</a>
+            <p class="sidebar-user">{{ user.username|default:"Current user" }}</p>
+            <a class="logout-link" href="{% url 'logout' %}">Sign out</a>
         </div>
     </aside>
 
     <main class="main-content">
-      {% block content %}
-      {% endblock %}
+      {% block content %}{% endblock %}
     </main>
 </div>
-
+{% block extra_scripts %}{% endblock %}
 </body>
 </html>

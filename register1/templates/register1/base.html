@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Student Analytics{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'students/css/style.css' %}">
     {% block extra_head %}{% endblock %}
@@ -12,7 +13,7 @@
 <div class="app-shell">
     <aside class="sidebar">
         <div class="sidebar-brand">
-            <div class="brand-icon">🎓</div>
+            <div class="brand-icon">SA</div>
             <div>
                 <span class="brand-title">Student</span>
                 <span class="brand-subtitle">Analytics</span>
@@ -22,33 +23,33 @@
         <ul class="nav-list">
             <li class="nav-item">
                 <a href="/">
-                    <span class="nav-icon">🏠</span>
+                    <span class="nav-icon">HM</span>
                     <span>Home</span>
                 </a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a href="{% url 'insights' %}">
-                        <span class="nav-icon">📊</span>
+                        <span class="nav-icon">IN</span>
                         <span>Insights</span>
                     </a>
                 </li>
                 {% if user.is_staff %}
                     <li class="nav-item">
                         <a href="{% url 'student_list' %}">
-                            <span class="nav-icon">👥</span>
+                            <span class="nav-icon">ST</span>
                             <span>Students</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'manage_students' %}">
-                            <span class="nav-icon">📋</span>
+                            <span class="nav-icon">MG</span>
                             <span>Manage</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'pass_fail_chart_page' %}">
-                            <span class="nav-icon">📊</span>
+                            <span class="nav-icon">AD</span>
                             <span>Admin Dashboard</span>
                         </a>
                     </li>
@@ -56,7 +57,7 @@
                 {% if is_teacher_user %}
                     <li class="nav-item">
                         <a href="{% url 'teacher_dashboard_page' user.teacher.id %}">
-                            <span class="nav-icon">👩‍🏫</span>
+                            <span class="nav-icon">TD</span>
                             <span>Teacher Dashboard</span>
                         </a>
                     </li>

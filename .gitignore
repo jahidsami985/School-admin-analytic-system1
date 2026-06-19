@@ -1,0 +1,23 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Django/local runtime artifacts
+db.sqlite3
+staticfiles/
+
+# Local database exports
+*.sql
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

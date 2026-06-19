@@ -43,7 +43,16 @@ class Teacher(models.Model):
         blank=True
     )
     name = models.CharField(max_length=100)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
+    @property
+    def email(self):
+        return self.user.email if self.user else ""
     
 
 class Performance(models.Model):

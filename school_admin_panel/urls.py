@@ -1,5 +1,9 @@
 from django.contrib import admin
+from django.contrib.staticfiles.views import serve as serve_static
+from django.http import Http404
+from django.http.request import split_domain_port
 from django.urls import include, path
+from django.urls import re_path
 
 from students.views import admin_views, teacher_views
 from students.views.admin_views import home
@@ -11,6 +15,13 @@ from register1.views import (
     student_dashboard,
     admin_dashboard,
 )
+
+
+def local_static(request, path):
+    host, _ = split_domain_port(request.get_host())
+    if host not in {"127.0.0.1", "localhost", "[::1]"}:
+        raise Http404
+    return serve_static(request, path, insecure=True)
 
 
 urlpatterns = [
@@ -36,6 +47,16 @@ urlpatterns = [
     path("Teacher-Dashboard-charts/<int:teacher_id>/",
     teacher_views.teacher_dashboard_page,
     name="Teacher-Dashboard-charts"),
+    path(
+        "teacher/dashboard/<int:teacher_id>/",
+        teacher_views.teacher_dashboard_page,
+        name="teacher_dashboard_page",
+    ),
+    path(
+        "teacher/dashboard/data/<int:teacher_id>/",
+        teacher_views.teacher_dashboard_data,
+        name="teacher_dashboard_data",
+    ),
 
 
 
@@ -45,8 +66,5 @@ urlpatterns = [
     path("dashboard/teacher/", teacher_dashboard, name="teacher_dashboard"),
     path("dashboard/student/", student_dashboard, name="student_dashboard"),
     path("dashboard/admin/", admin_dashboard, name="admin_dashboard"),
+    re_path(r"^static/(?P<path>.*)$", local_static, name="local_static"),
 ]
-
-
-
-

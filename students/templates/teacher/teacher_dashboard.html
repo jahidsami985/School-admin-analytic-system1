@@ -1,27 +1,224 @@
-{% extends "base.html" %}
+{% extends "register1/base.html" %}
+{% load static %}
 
 {% block title %}Teacher Dashboard{% endblock %}
 
 {% block content %}
-<h2>Teacher Dashboard</h2>
+<div class="teacher-dashboard" data-dashboard-url="{% url 'teacher_dashboard_data' teacher_id %}">
+  <header class="teacher-head">
+    <div>
+      <p class="teacher-eyebrow">Teacher Dashboard</p>
+      <h1 id="teacherTitle">Course Analytics</h1>
+      <p id="teacherSubtitle" class="teacher-subtitle">Loading course performance...</p>
+    </div>
+    <a class="teacher-link" href="{% url 'insights' %}">Insights</a>
+  </header>
 
-<canvas id="avgChart" width="400" height="200"></canvas>
+  <section id="teacherState" class="teacher-state" aria-live="polite">
+    <span class="teacher-loader" aria-hidden="true"></span>
+    <span>Loading dashboard...</span>
+  </section>
 
+  <section id="teacherContent" class="teacher-content" hidden>
+    <div class="teacher-stats" aria-label="Teacher performance summary">
+      <article class="teacher-stat">
+        <span class="teacher-stat-label">Average Score</span>
+        <strong id="avgScoreValue">0</strong>
+      </article>
+      <article class="teacher-stat">
+        <span class="teacher-stat-label">Top Students</span>
+        <strong id="topStudentCount">0</strong>
+      </article>
+      <article class="teacher-stat">
+        <span class="teacher-stat-label">Low Attendance</span>
+        <strong id="lowAttendanceCount">0</strong>
+      </article>
+    </div>
+
+    <div class="teacher-grid">
+      <section class="teacher-panel teacher-panel-wide">
+        <div class="teacher-panel-head">
+          <h2>Average Marks</h2>
+          <span id="courseCodeBadge" class="teacher-badge">Course</span>
+        </div>
+        <div class="teacher-chart-wrap">
+          <canvas id="avgChart"></canvas>
+        </div>
+      </section>
+
+      <section class="teacher-panel">
+        <div class="teacher-panel-head">
+          <h2>Top Students</h2>
+        </div>
+        <div class="teacher-chart-wrap">
+          <canvas id="topStudentsChart"></canvas>
+        </div>
+      </section>
+
+      <section class="teacher-panel">
+        <div class="teacher-panel-head">
+          <h2>Bottom Students</h2>
+        </div>
+        <div class="teacher-chart-wrap">
+          <canvas id="bottomStudentsChart"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <section class="teacher-panel">
+      <div class="teacher-panel-head">
+        <h2>Attendance Watchlist</h2>
+      </div>
+      <ul id="lowAttendanceList" class="teacher-list"></ul>
+    </section>
+  </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-fetch("/teacher/dashboard/data/{{ teacher_id }}/")
-  .then(res => res.json())
-  .then(data => {
-      const ctx = document.getElementById("avgChart");
-      new Chart(ctx, {
-          type: "bar",
-          data: {
-              labels: ["Average Marks"],
-              datasets: [{
-                  label: "Marks",
-                  data: [data.avg_score]
-              }]
-          }
-      });
-  });
+(() => {
+  const root = document.querySelector('.teacher-dashboard');
+  const state = document.getElementById('teacherState');
+  const content = document.getElementById('teacherContent');
+  const title = document.getElementById('teacherTitle');
+  const subtitle = document.getElementById('teacherSubtitle');
+  const avgScoreValue = document.getElementById('avgScoreValue');
+  const topStudentCount = document.getElementById('topStudentCount');
+  const lowAttendanceCount = document.getElementById('lowAttendanceCount');
+  const courseCodeBadge = document.getElementById('courseCodeBadge');
+  const lowAttendanceList = document.getElementById('lowAttendanceList');
+
+  const palette = {
+    ink: '#0f172a',
+    blue: '#2563eb',
+    teal: '#0f766e',
+    red: '#dc2626',
+    slate: '#64748b',
+  };
+
+  function showState(message, mode = 'loading') {
+    state.className = `teacher-state teacher-state-${mode}`;
+    state.innerHTML = mode === 'loading'
+      ? '<span class="teacher-loader" aria-hidden="true"></span><span>' + message + '</span>'
+      : '<span>' + message + '</span>';
+    state.hidden = false;
+    content.hidden = true;
+  }
+
+  function formatScore(value) {
+    const number = Number(value || 0);
+    return Number.isInteger(number) ? String(number) : number.toFixed(1);
+  }
+
+  function studentLabels(items) {
+    return items.map((item) => item.student__name || 'Student');
+  }
+
+  function totals(items) {
+    return items.map((item) => Number(item.total || 0));
+  }
+
+  function renderBar(canvasId, labels, values, label, color) {
+    const canvas = document.getElementById(canvasId);
+    return new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label,
+          data: values,
+          backgroundColor: color,
+          borderColor: color,
+          borderWidth: 1,
+          borderRadius: 6,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: palette.slate },
+          },
+          y: {
+            beginAtZero: true,
+            grid: { color: 'rgba(100, 116, 139, 0.16)' },
+            ticks: { color: palette.slate },
+          },
+        },
+      },
+    });
+  }
+
+  function renderAttendance(items) {
+    lowAttendanceList.innerHTML = '';
+
+    if (!items.length) {
+      const empty = document.createElement('li');
+      empty.className = 'teacher-empty-row';
+      empty.textContent = 'No low-attendance students';
+      lowAttendanceList.appendChild(empty);
+      return;
+    }
+
+    items.forEach((item) => {
+      const row = document.createElement('li');
+      const name = document.createElement('strong');
+      const meta = document.createElement('span');
+      const percent = Number(item.attendance_percentage || 0);
+
+      name.textContent = item.student__name || 'Student';
+      meta.textContent = `${formatScore(percent)}% attendance`;
+      row.append(name, meta);
+      lowAttendanceList.appendChild(row);
+    });
+  }
+
+  fetch(root.dataset.dashboardUrl, { credentials: 'same-origin' })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Dashboard request failed');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const teacher = data.teacher || {};
+      const topStudents = data.top_students || [];
+      const bottomStudents = data.bottom_students || [];
+      const lowAttendance = data.low_attendance || [];
+
+      title.textContent = teacher.name || 'Course Analytics';
+      subtitle.textContent = teacher.course
+        ? `${teacher.course} performance overview`
+        : 'No course assigned';
+      courseCodeBadge.textContent = teacher.course_code || 'Unassigned';
+
+      if (!teacher.course) {
+        showState('No course is assigned to this teacher yet.', 'empty');
+        return;
+      }
+
+      avgScoreValue.textContent = formatScore(data.avg_score);
+      topStudentCount.textContent = topStudents.length;
+      lowAttendanceCount.textContent = lowAttendance.length;
+
+      content.hidden = false;
+      state.hidden = true;
+
+      renderBar('avgChart', [teacher.course], [Number(data.avg_score || 0)], 'Average Marks', palette.blue);
+      renderBar('topStudentsChart', studentLabels(topStudents), totals(topStudents), 'Marks', palette.teal);
+      renderBar('bottomStudentsChart', studentLabels(bottomStudents), totals(bottomStudents), 'Marks', palette.red);
+      renderAttendance(lowAttendance);
+    })
+    .catch(() => {
+      showState('Dashboard data could not be loaded.', 'error');
+    });
+})();
 </script>
 {% endblock %}
